@@ -28,7 +28,6 @@ export default class Landing extends Component {
 
     login = () => {
         const redirectUri = encodeURIComponent(`${window.location.origin}/auth`);
-
         window.location = `https://${
             process.env.REACT_APP_AUTH0_DOMAIN
             }/authorize?client_id=${
