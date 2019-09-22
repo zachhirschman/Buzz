@@ -29,19 +29,10 @@ module.exports = {
 
       return req.app.get('db').find_user_by_auth0_id(userData.sub).then(users => {
         if (users.length) {
-          console.log("FOUND USER TO LOG IN:", users)
           const user = users[0];
           if(user.admin === true){
-            req.app.get("db").getAdminPostData(user.admin_of).then(allAdminPostData =>{
-              console.log("ADMIN DATA: ", allAdminPostData)
-              req.session.adminPostData = allAdminPostData
-              console.log("ADMIN SESSION VARIABLE: ", req.session.adminData)
-              req.session.user = user;
-            }).then(() =>{
+              req.session.user = user
               res.status(200).redirect('/adminDashboard')
-            })
-            
-            
           }
           else if(user.admin === false){
             req.session.user = user;
@@ -69,9 +60,10 @@ module.exports = {
     res.status(200).json(req.session.user);
   },
   getAdminData(req,res){
-    console.log('SESSION:' , req.session)
-    console.log("Sending admin data:", req.session.adminPostData)
-    res.status(200).json(req.session.adminPostData)
+      req.app.get("db").getAdminPostData(req.session.user.user_id).then(allAdminPostData =>{
+      console.log("got all admin post data", allAdminPostData)
+      res.status(200).json(allAdminPostData)
+    })
   }
 }
 

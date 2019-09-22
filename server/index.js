@@ -1,6 +1,7 @@
 
 const userController = require('./Controllers/userController');
 const authController = require("./Controllers/authController")
+const adminController = require("./Controllers/adminActionsController");
 
 //Require Packages
 const express = require("express")
@@ -92,6 +93,9 @@ app.get('/getUserDrinks/:id', userController.getDrinksForUser)
 app.get('/getUserSession', authController.getUserData)
 app.delete('/deleteDrink/:id/:userId', userController.deleteUserDrinks)
 app.put(`/getusername/:user/:username`,userController.getUsername )
+
+//Admin endpoints
+app.get('/admin/get-postData/:room_id', adminController.getPostDataForRoom)
 
 //Sockets
 io.sockets.on('connection', (socket) => {

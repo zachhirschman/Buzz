@@ -1,5 +1,16 @@
 .AdminNavBar-Parent{
     width:20%;
     height:100%;
-    background-color: #ffcb34;
+    background-color: #f1d990;
+    flex-direction: column;
+    display:flex;
+    justify-content: flex-start;
+}
+
+.menu-button{
+    padding:10px;
+    background-color:#ffcb34;
+    border:none;
+    border-bottom: 2px solid #cea93b;
+    font-family: 'Montserrat', sans-serif;
 }
