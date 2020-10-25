@@ -31,9 +31,7 @@ module.exports = {
           const user = users[0];
           if (user.admin === true) {
             req.app.get("db").getAdminPostData(user.admin_of).then(allAdminPostData => {
-              console.log("ADMIN DATA: ", allAdminPostData)
               req.session.adminPostData = allAdminPostData
-              console.log("ADMIN SESSION VARIABLE: ", req.session.adminData)
               req.session.user = user;
             }).then(() => {
               res.status(200).redirect('/adminDashboard')
