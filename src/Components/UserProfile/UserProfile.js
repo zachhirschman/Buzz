@@ -90,7 +90,7 @@ class UserProfile extends Component {
 
 
     render() {
-        let { email, profile_name, picture, user_name, admin } = this.props.currentUser
+        let { email, profile_name, picture, user_name, admin, birthday } = this.props.currentUser
         let mappedDrinks = this.state.userDrinks.map((drink, index) => {
             return (
                 <button className="dealParent-container__item" onClick={() => this.toggleCode(drink)}>
@@ -189,11 +189,15 @@ class UserProfile extends Component {
                             <h6>Email:</h6>
                             <p>{email}</p>
 
+                            <h6>Birthday:</h6>
+                            <p>{birthday}</p>
+
                             {/* <h6>Payment</h6> */}
                             {/* <p>If payment method on file display 'payment method on file, button says 'update'? else Add Card</p> */}
                             <div className='profile-tabs__buttons'>
                                 {/* <button style={{ marginBottom: 30, marginTop: 5 }}>Add Card</button> */}
                                 <button onClick={this.logout}>Logout</button>
+                                <button>Edit</button>
                             </div>
                         </div>
                         :

@@ -24,7 +24,6 @@ module.exports = {
 
     function storeUserInfoInDataBase(userInfoResponse) {
       const userData = userInfoResponse.data;
-      console.log('userData', userData)
 
 
       return req.app.get('db').find_user_by_auth0_id(userData.sub).then(users => {
@@ -56,12 +55,10 @@ module.exports = {
       .catch(err => console.log(err))
   },
   getUserData(req, res) {
-    console.log("Sending", req.session.user);
     res.status(200).json(req.session.user);
   },
   getAdminData(req,res){
       req.app.get("db").getAdminPostData(req.session.user.user_id).then(allAdminPostData =>{
-      console.log("got all admin post data", allAdminPostData)
       res.status(200).json(allAdminPostData)
     })
   }

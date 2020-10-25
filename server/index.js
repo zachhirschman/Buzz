@@ -25,11 +25,6 @@ app.use(session({
     resave: false
 }))
 
-//testing location info for db 
-// app.post("/venues",roomsController.postBusiness)
-// plotting from db 
-// app.get("/dbvenues", roomsController.getBusiness) 
-
 
 //auth endpoint
 app.get("/auth", authController.login)
@@ -39,7 +34,6 @@ app.get('/getAdminPosts', authController.getAdminData)
 
 //Stripe
 app.post("/stripe", (req, res) => {
-    console.log("Stripe has hit index.js")
     const stripeToken = req.body;
     console.log(stripeToken)
     const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
@@ -96,6 +90,7 @@ app.put(`/getusername/:user/:username`,userController.getUsername )
 
 //Admin endpoints
 app.get('/admin/get-postData/:room_id', adminController.getPostDataForRoom)
+app.post("/api/create-deal", adminController.createDrinkDeal)
 
 //Sockets
 io.sockets.on('connection', (socket) => {
@@ -104,17 +99,13 @@ io.sockets.on('connection', (socket) => {
 
     socket.join("Home")
 
-    // io.in("Home").emit("NewPost", {})
     socket.on("NewPost", body => {
         const { poster_username, poster_pic, post_content, post_img, upvotes, downvotes, drinks_given, room_id, poster_id } = body
-        console.log("RECIEVED POST DATA ON BACKEND", body)
         db.newPost([poster_username, poster_pic, post_content, post_img, upvotes, downvotes, drinks_given, room_id, poster_id]).then(response => {
-            console.log("Response after adding message: ", response)
             io.in(room_id).emit("Newmessage", response)
         })
     })
     socket.on("NewComment", body => {
-        console.log("Got body", body)
         const { comment_message, post_id, commenter_user_name, commenter_img, comment_upvotes, comment_downvotes, room_id } = body
         db.newComment([post_id, commenter_user_name, comment_message, comment_upvotes, comment_downvotes, commenter_img, room_id]).then(allComments => {
             io.in(room_id).emit("AllComments", allComments)
@@ -128,12 +119,10 @@ io.sockets.on('connection', (socket) => {
 
         db.join_user_to_room(room_id).then(room => {
             db.getPostsinRoom(room_id).then(roomData => {
-                console.log("This is the found room data for room", room_id + "   " + roomData)
                 io.in(room_id).emit('SendRoomData', roomData)
             })
         })
         socket.on("SendDrink", body => {
-            console.log("Recieved Drink request", body)
             const { recipient_id, recipient, deal_description, coupon_code, sender_name, sender_id } = body
             db.send_drink(recipient_id, recipient, deal_description, coupon_code, sender_name, sender_id).then(drinks => {
                 console.log(drinks)
@@ -149,7 +138,6 @@ io.sockets.on('connection', (socket) => {
 
         db.remove_user_from_room(room_id).then(room_id => {
             console.log('left room #', room_id)
-            // io.sockets.emit()
         })
     })
     socket.on('UpvotePost', body =>{
@@ -169,9 +157,7 @@ io.sockets.on('connection', (socket) => {
         })
     })
     socket.on("CommentDownvote", body =>{
-        console.log("BODY RECIEVED: ", body)
         db.downvote_comments([body.comment_id,body.room_id]).then(allComments =>{
-            console.log("ALL COMMENTS: ", allComments)
             io.sockets.emit("NewCommentDownvote", allComments)
         })
     })

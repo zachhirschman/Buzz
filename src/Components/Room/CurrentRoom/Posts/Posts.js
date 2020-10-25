@@ -35,7 +35,7 @@ class Post extends Component {
         this.props.socket.emit("DownvotePost", body)
     }
     chooseDrink = (sender_name, sender_id, user_name, user_id) => {
-        console.log(this.props.deals)
+        console.log(" drink deals; ",this.props.deals)
         let mappedDeals = this.props.deals.map(deal => {
             return (
                 <div className="dealParent-container">

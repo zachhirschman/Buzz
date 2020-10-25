@@ -104,7 +104,6 @@ describe('Integration tests for buzz.', () => {
                 user_id: 1
             }
             return utils.updateUsername(db, user).then(updatedUser => {
-                console.log('look at me', updatedUser)
                 expect(updatedUser.length).not.toEqual(0)
                 expect(updatedUser[0]).toMatchObject({
                     user_name: expect.any(String),
@@ -123,7 +122,7 @@ describe('Integration tests for buzz.', () => {
                     profile_name: 'zdawggydog',
                     picture: 'blahh'
                 }
-                // console.log('inside IT', db)
+                
                 return utils.createUser(db, user).then(response => {
                     expect(response.length).not.toEqual(0)
                     expect(response[0]).toMatchObject({
