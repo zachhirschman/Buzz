@@ -16,3 +16,5 @@
 ![screengrab-iphone-2](https://user-images.githubusercontent.com/42726824/58068404-1adb0800-7b46-11e9-9f5b-5518f12289e0.png)
 
 ![profile1-iphone.png](https://github.com/zachhirschman/Buzz/blob/master/src/images/iPhone/profile1-iphone.png)
+
+![drink-notification-iphone.png](https://github.com/zachhirschman/Buzz/blob/master/src/images/iPhone/drink-notification-iphone.png?raw=true)
