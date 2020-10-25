@@ -9,8 +9,16 @@ export default class AdminDashbaord extends Component{
         super()
         this.state ={
             adminPostData:[],
-            adminData:[]
+            adminData:[],
+            adminRoomData:[],
+            dataToShow:'room-data'
         }
+    }
+    navigate =(menuItem) =>{
+        console.log("Changing view: ", menuItem)
+        this.setState({
+            dataToShow:menuItem
+        })
     }
     componentDidMount = () =>{
             Axios.get("/getAdminPosts").then(allAdminPosts =>{
@@ -20,6 +28,7 @@ export default class AdminDashbaord extends Component{
                 })
             })
             Axios.get("/getUserSession").then(adminData =>{
+                console.log("adminData: ", adminData)
                 this.setState({
                     adminData:adminData.data
                 })
@@ -28,9 +37,10 @@ export default class AdminDashbaord extends Component{
     render(){
         return(
             <div className = "Admin-Dash-Parent">
-                <AdminNavBar/>
-                <AdminMain/>
+                <AdminNavBar navigate ={this.navigate}/>
+                <AdminMain dataToShow = {this.state.dataToShow} messages ={this.state.adminPostData}/>
             </div>
         )
     }
 }
+

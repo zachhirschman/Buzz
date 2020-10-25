@@ -3,7 +3,6 @@ module.exports = {
         const db = req.app.get("db")
         const { id } = req.params
         db.getPostsinRoom(id).then(roomData => {
-            console.log("Sending data")
             res.status(200).json(roomData)
         })
     },

@@ -1,5 +1,43 @@
 .AdminNavBar-Parent{
     width:20%;
     height:100%;
-    background-color: #ffcb34;
+    background-color: #f1d990;
+    flex-direction: column;
+    display:flex;
+    justify-content: flex-start;
+}
+
+.menu-button{
+    padding:10px;
+    width:100%;
+    background-color:#ffcb34;
+    border:none;
+    border-bottom: 2px solid #cea93b;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.subLink-parent{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.subLink{
+    font-size: 12px;
+    padding:10px;
+    background-color:#cea93b;
+    border-bottom:solid 1px #6d6d65;
+    width:100%;
+
+}
+
+.dash-link{
+    width:100%;
+    height:10%;
+    background-color: rgb(45, 48, 49);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 2px #cea93b;
 }

@@ -24,12 +24,10 @@ module.exports = {
 
     function storeUserInfoInDataBase(userInfoResponse) {
       const userData = userInfoResponse.data;
-      console.log('userData', userData)
 
 
       return req.app.get('db').find_user_by_auth0_id(userData.sub).then(users => {
         if (users.length) {
-          console.log("FOUND USER TO LOG IN:", users)
           const user = users[0];
           if (user.admin === true) {
             req.app.get("db").getAdminPostData(user.admin_of).then(allAdminPostData => {
@@ -40,8 +38,6 @@ module.exports = {
             }).then(() => {
               res.status(200).redirect('/adminDashboard')
             })
-
-
           }
           else if (user.admin === false) {
             req.session.user = user;
@@ -65,12 +61,10 @@ module.exports = {
       .catch(err => console.log(err))
   },
   getUserData(req, res) {
-    console.log("Sending", req.session.user);
     res.status(200).json(req.session.user);
   },
-  getAdminData(req, res) {
-    console.log('SESSION:', req.session)
-    console.log("Sending admin data:", req.session.adminPostData)
-    res.status(200).json(req.session.adminPostData)
-  }
+  getAdminData(req,res){
+      req.app.get("db").getAdminPostData(req.session.user.user_id).then(allAdminPostData =>{
+      res.status(200).json(allAdminPostData)
+    })
 }

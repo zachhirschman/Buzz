@@ -10,6 +10,7 @@ import drinkImg from "../../images/drink.png";
 import warning from "../../images/warning.png";
 import edit from '../../images/icons8-edit-24.png';
 import anon from "../../images/Portrait_Placeholder.png"
+import {Link} from "react-router-dom"
 
 
 
@@ -89,7 +90,7 @@ class UserProfile extends Component {
 
 
     render() {
-        let { email, profile_name, picture, user_name } = this.props.currentUser
+        let { email, profile_name, picture, user_name, admin, birthday } = this.props.currentUser
         let mappedDrinks = this.state.userDrinks.map((drink, index) => {
             return (
                 <button className="dealParent-container__item" onClick={() => this.toggleCode(drink)}>
@@ -133,7 +134,7 @@ class UserProfile extends Component {
                 </div>
             )
         })
-        console.log(this.props.currentUser)
+        console.log("current user: ",this.props.currentUser)
         return (
             <div className='profile-parent'>
 
@@ -159,11 +160,12 @@ class UserProfile extends Component {
                     <div className='profile-tabs'>
                         <button onClick={this.toggleProfile}>Profile</button>
                         <button onClick={this.toggleDrinks}>Honey</button>
+                        {admin ? <Link to ="/adminDashboard"><button>Admin</button></Link> : null}
                     </div>
                 </div>
 
                 <div className='profile-tabs__info'>
-                    {this.state.showProfile ?
+                    {this.state.showProfile  ?
                         <div className='profile-tabs__infoProfile'>
                             {/* <h2>Profile</h2> */}
 
@@ -187,11 +189,15 @@ class UserProfile extends Component {
                             <h6>Email:</h6>
                             <p>{email}</p>
 
+                            <h6>Birthday:</h6>
+                            <p>{birthday}</p>
+
                             {/* <h6>Payment</h6> */}
                             {/* <p>If payment method on file display 'payment method on file, button says 'update'? else Add Card</p> */}
                             <div className='profile-tabs__buttons'>
                                 {/* <button style={{ marginBottom: 30, marginTop: 5 }}>Add Card</button> */}
                                 <button onClick={this.logout}>Logout</button>
+                                <button>Edit</button>
                             </div>
                         </div>
                         :
